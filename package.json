@@ -1,0 +1,23 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlhelou/Timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlhelou/Timer/issues"
+  },
+  "homepage": "https://github.com/vlhelou/Timer#readme",
+  "devDependencies": {
+    "electron": "^16.0.7"
+  }
+}
