@@ -6,7 +6,6 @@
   Your browser does not support the audio tag.
 </audio>
 
-  <button v-on:click="tocaAlarme()">dispara o alarme</button>
   <div class="row">
     <div class="col-12">
       <h3>Lista de Alarmes</h3>
