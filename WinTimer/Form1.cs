@@ -1,10 +1,18 @@
 
 
+using System.Timers;
+
 namespace WinTimer
 {
     public partial class Form1 : Form
     {
-        List<Alarme> alarmeList=new();
+        System.Timers.Timer ct = new() { Interval=500 };
+        DateTime ProximaExecucao = new DateTime();
+
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Alarme.wav");
+
+        delegate void SetTextCallback(string texto);
+
         public Form1()
         {
 
@@ -13,11 +21,57 @@ namespace WinTimer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
-            alarmeList.Add(new Alarme("teste", 10));
-            alarmeList.Add(new Alarme("5 Min.", 300));
-            alarmeList.Add(new Alarme("15 Min.", 900));
-            gAlarme.DataSource = alarmeList;
+            ct.Enabled = true;
+            ct.Start();
+            ct.Elapsed += MostraTempo;
+
+        }
+
+        private void MostraTempo(Object source, ElapsedEventArgs e)
+        {
+            if (btnAcao.Text == "Para")
+            {
+                if (lbFalta.InvokeRequired)
+                {
+                    var faltam = (int)(ProximaExecucao - DateTime.Now).TotalSeconds;
+                    if (faltam <= 0)
+                    {
+                        if (int.TryParse(txtIntervalo.Text, out int intervalo))
+                        {
+                            ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
+                            player.Play();
+                        }
+                    }
+                    SetTextCallback d = new SetTextCallback(DefinirTexto);
+                    this.Invoke(d, new object[] { faltam.ToString() });
+                }
+
+            }
+
+        }
+
+        private void DefinirTexto(string texto)
+        {
+            this.lbFalta.Text = texto;
+        }
+
+        private void btnAcao_Click(object sender, EventArgs e)
+        {
+            if (btnAcao.Text == "Inicia")
+            {
+                btnAcao.Text = "Para";
+                if (int.TryParse(txtIntervalo.Text, out int intervalo))
+                {
+                    ProximaExecucao = DateTime.Now.AddSeconds(intervalo);
+                    ct.Start();
+                }
+
+            }
+            else
+            {
+                btnAcao.Text = "Inicia";
+                ct.Stop();
+            }
         }
     }
 }

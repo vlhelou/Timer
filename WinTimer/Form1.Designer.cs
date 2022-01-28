@@ -28,35 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gAlarme = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.gAlarme)).BeginInit();
+            this.txtIntervalo = new System.Windows.Forms.TextBox();
+            this.btnAcao = new System.Windows.Forms.Button();
+            this.lbFalta = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // gAlarme
+            // txtIntervalo
             // 
-            this.gAlarme.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gAlarme.Location = new System.Drawing.Point(39, 28);
-            this.gAlarme.Name = "gAlarme";
-            this.gAlarme.RowTemplate.Height = 25;
-            this.gAlarme.Size = new System.Drawing.Size(699, 150);
-            this.gAlarme.TabIndex = 0;
+            this.txtIntervalo.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtIntervalo.Location = new System.Drawing.Point(13, 22);
+            this.txtIntervalo.Name = "txtIntervalo";
+            this.txtIntervalo.Size = new System.Drawing.Size(120, 61);
+            this.txtIntervalo.TabIndex = 1;
+            this.txtIntervalo.Text = "300";
+            this.txtIntervalo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnAcao
+            // 
+            this.btnAcao.Location = new System.Drawing.Point(155, 22);
+            this.btnAcao.Name = "btnAcao";
+            this.btnAcao.Size = new System.Drawing.Size(74, 61);
+            this.btnAcao.TabIndex = 2;
+            this.btnAcao.Text = "Inicia";
+            this.btnAcao.UseVisualStyleBackColor = true;
+            this.btnAcao.Click += new System.EventHandler(this.btnAcao_Click);
+            // 
+            // lbFalta
+            // 
+            this.lbFalta.AutoSize = true;
+            this.lbFalta.Font = new System.Drawing.Font("Segoe UI", 35F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbFalta.Location = new System.Drawing.Point(249, 22);
+            this.lbFalta.Name = "lbFalta";
+            this.lbFalta.Size = new System.Drawing.Size(151, 62);
+            this.lbFalta.TabIndex = 3;
+            this.lbFalta.Text = "label1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.gAlarme);
+            this.ClientSize = new System.Drawing.Size(427, 124);
+            this.Controls.Add(this.lbFalta);
+            this.Controls.Add(this.btnAcao);
+            this.Controls.Add(this.txtIntervalo);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gAlarme)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private DataGridView gAlarme;
+        private TextBox txtIntervalo;
+        private Button btnAcao;
+        private Label lbFalta;
     }
 }
