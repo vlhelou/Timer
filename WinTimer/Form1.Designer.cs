@@ -36,7 +36,7 @@
             // txtIntervalo
             // 
             this.txtIntervalo.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtIntervalo.Location = new System.Drawing.Point(13, 22);
+            this.txtIntervalo.Location = new System.Drawing.Point(2, 3);
             this.txtIntervalo.Name = "txtIntervalo";
             this.txtIntervalo.Size = new System.Drawing.Size(120, 61);
             this.txtIntervalo.TabIndex = 1;
@@ -45,7 +45,7 @@
             // 
             // btnAcao
             // 
-            this.btnAcao.Location = new System.Drawing.Point(155, 22);
+            this.btnAcao.Location = new System.Drawing.Point(144, 3);
             this.btnAcao.Name = "btnAcao";
             this.btnAcao.Size = new System.Drawing.Size(74, 61);
             this.btnAcao.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             this.lbFalta.AutoSize = true;
             this.lbFalta.Font = new System.Drawing.Font("Segoe UI", 35F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbFalta.Location = new System.Drawing.Point(249, 22);
+            this.lbFalta.Location = new System.Drawing.Point(238, 3);
             this.lbFalta.Name = "lbFalta";
             this.lbFalta.Size = new System.Drawing.Size(151, 62);
             this.lbFalta.TabIndex = 3;
@@ -67,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 124);
+            this.ClientSize = new System.Drawing.Size(378, 73);
             this.Controls.Add(this.lbFalta);
             this.Controls.Add(this.btnAcao);
             this.Controls.Add(this.txtIntervalo);
