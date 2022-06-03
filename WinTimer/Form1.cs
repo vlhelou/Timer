@@ -6,7 +6,7 @@ namespace WinTimer
 {
     public partial class Form1 : Form
     {
-        System.Timers.Timer ct = new() { Interval=500 };
+        System.Timers.Timer ct = new() { Interval = 500 };
         DateTime ProximaExecucao = new DateTime();
 
         System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Alarme.wav");
@@ -39,7 +39,8 @@ namespace WinTimer
                         if (int.TryParse(txtIntervalo.Text, out int intervalo))
                         {
                             ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
-                            player.Play();
+                            if (!this.chMudo.Checked)
+                                player.Play();
                         }
                     }
                     SetTextCallback d = new SetTextCallback(DefinirTexto);
