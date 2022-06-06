@@ -29,6 +29,7 @@ namespace WinTimer
 
         private void MostraTempo(Object source, ElapsedEventArgs e)
         {
+
             if (btnAcao.Text == "Para")
             {
                 if (lbFalta.InvokeRequired)
