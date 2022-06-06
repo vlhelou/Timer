@@ -31,6 +31,7 @@
             this.txtIntervalo = new System.Windows.Forms.TextBox();
             this.btnAcao = new System.Windows.Forms.Button();
             this.lbFalta = new System.Windows.Forms.Label();
+            this.chMudo = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtIntervalo
@@ -47,7 +48,7 @@
             // 
             this.btnAcao.Location = new System.Drawing.Point(144, 3);
             this.btnAcao.Name = "btnAcao";
-            this.btnAcao.Size = new System.Drawing.Size(74, 61);
+            this.btnAcao.Size = new System.Drawing.Size(74, 28);
             this.btnAcao.TabIndex = 2;
             this.btnAcao.Text = "Inicia";
             this.btnAcao.UseVisualStyleBackColor = true;
@@ -63,11 +64,22 @@
             this.lbFalta.TabIndex = 3;
             this.lbFalta.Text = "label1";
             // 
+            // chMudo
+            // 
+            this.chMudo.AutoSize = true;
+            this.chMudo.Location = new System.Drawing.Point(144, 36);
+            this.chMudo.Name = "chMudo";
+            this.chMudo.Size = new System.Drawing.Size(58, 19);
+            this.chMudo.TabIndex = 4;
+            this.chMudo.Text = "Mudo";
+            this.chMudo.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 73);
+            this.ClientSize = new System.Drawing.Size(380, 100);
+            this.Controls.Add(this.chMudo);
             this.Controls.Add(this.lbFalta);
             this.Controls.Add(this.btnAcao);
             this.Controls.Add(this.txtIntervalo);
@@ -84,5 +96,6 @@
         private TextBox txtIntervalo;
         private Button btnAcao;
         private Label lbFalta;
+        private CheckBox chMudo;
     }
 }
