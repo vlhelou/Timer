@@ -67,7 +67,7 @@
             // chMudo
             // 
             this.chMudo.AutoSize = true;
-            this.chMudo.Location = new System.Drawing.Point(144, 37);
+            this.chMudo.Location = new System.Drawing.Point(144, 36);
             this.chMudo.Name = "chMudo";
             this.chMudo.Size = new System.Drawing.Size(58, 19);
             this.chMudo.TabIndex = 4;
