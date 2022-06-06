@@ -78,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 100);
+            this.ClientSize = new System.Drawing.Size(378, 73);
             this.Controls.Add(this.chMudo);
             this.Controls.Add(this.lbFalta);
             this.Controls.Add(this.btnAcao);
