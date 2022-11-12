@@ -2,78 +2,88 @@
 
 using System.Timers;
 
-namespace WinTimer
+namespace WinTimer;
+
+public partial class Form1 : Form
 {
-    public partial class Form1 : Form
+    System.Timers.Timer ct = new() { Interval = 1000};
+    DateTime ProximaExecucao = new DateTime();
+    DateTime ultimaExecucao = DateTime.Now;
+
+
+    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Alarme.wav");
+
+    delegate void SetTextCallback(string texto);
+
+    public Form1()
     {
-        System.Timers.Timer ct = new() { Interval = 500 };
-        DateTime ProximaExecucao = new DateTime();
 
-        System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Alarme.wav");
+        InitializeComponent();
+    }
 
-        delegate void SetTextCallback(string texto);
+    private void Form1_Load(object sender, EventArgs e)
+    {
+        ct.Enabled = true;
+        ct.Start();
+        ct.Elapsed += MostraTempo;
 
-        public Form1()
+    }
+
+
+    private void MostraTempo(Object source, ElapsedEventArgs e)
+    {
+        if (btnAcao.Text == "Para")
         {
-
-            InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            ct.Enabled = true;
-            ct.Start();
-            ct.Elapsed += MostraTempo;
-
-        }
-
-
-        private void MostraTempo(Object source, ElapsedEventArgs e)
-        {
-            if (btnAcao.Text == "Para")
+            if (lbFalta.InvokeRequired)
             {
-                if (lbFalta.InvokeRequired)
+                var faltam = (int)(ProximaExecucao - DateTime.Now).TotalSeconds;
+                if (faltam <= 0)
                 {
-                    var faltam = (int)(ProximaExecucao - DateTime.Now).TotalSeconds;
-                    if (faltam <= 0)
+                    if (int.TryParse(txtIntervalo.Text, out int intervalo))
                     {
-                        if (int.TryParse(txtIntervalo.Text, out int intervalo))
-                        {
-                            ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
-                            if (!this.chMudo.Checked)
-                                player.Play();
-                        }
+                        ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
+                        if (!this.chMudo.Checked)
+                            player.Play();
                     }
-                    SetTextCallback d = new SetTextCallback(DefinirTexto);
-                    this.Invoke(d, new object[] { faltam.ToString() });
                 }
-
-            }
-
-        }
-
-        private void DefinirTexto(string texto)
-        {
-            this.lbFalta.Text = texto;
-        }
-
-        private void btnAcao_Click(object sender, EventArgs e)
-        {
-            if (btnAcao.Text == "Inicia")
-            {
-                btnAcao.Text = "Para";
-                if (int.TryParse(txtIntervalo.Text, out int intervalo))
+                else if (faltam % 60 == 0)
                 {
-                    ProximaExecucao = DateTime.Now.AddSeconds(intervalo);
-                    ct.Start();
-                }
+                    if (!this.chMudo.Checked)
+                    {
+                        Console.Beep(3000, 300);
 
+                    }
+                }
+                SetTextCallback d = new SetTextCallback(DefinirTexto);
+                this.Invoke(d, new object[] { faltam.ToString() });
             }
-            else
+
+        }
+
+    }
+
+    private void DefinirTexto(string texto)
+    {
+        this.lbFalta.Text = texto;
+    }
+
+    private void btnAcao_Click(object sender, EventArgs e)
+    {
+        if (btnAcao.Text == "Inicia")
+        {
+            btnAcao.Text = "Para";
+            if (int.TryParse(txtIntervalo.Text, out int intervalo))
             {
-                btnAcao.Text = "Inicia";
-                ct.Stop();
+                ProximaExecucao = DateTime.Now.AddSeconds(intervalo);
+                ct.Start();
             }
+
+        }
+        else
+        {
+            btnAcao.Text = "Inicia";
+            ct.Stop();
         }
     }
+
 }
