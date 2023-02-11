@@ -1,6 +1,8 @@
 
 
+using System.Net;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Text.Json;
 using System.Timers;
 
@@ -91,35 +93,44 @@ public partial class Form1 : Form
 
     private void btnAutomatico_Click(object sender, EventArgs e)
     {
-        using (var client = new HttpClient())
+        string conteudo = string.Empty;
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo");
+        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        using (Stream stream = response.GetResponseStream())
+        using (StreamReader reader = new StreamReader(stream))
         {
-            HttpResponseMessage response =  client.GetAsync("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo").Result;
-            var conteudo = response.Content.ReadAsStringAsync().Result;
-            var apiAgora = JsonSerializer.Deserialize<ApiTempo>(conteudo);
-            if (apiAgora == null)
-                return; 
-
-            int difMinutos = 5-(apiAgora.minute % 5);
-            if (difMinutos==0)
-                difMinutos= 5;
-            var alvo = apiAgora.dateTime.AddMinutes(difMinutos);
-            var arredondado = new DateTime(alvo.Year, alvo.Month, alvo.Day, alvo.Hour, alvo.Minute, 0);
-            var segundos = (arredondado-apiAgora.dateTime).TotalSeconds;
-            btnAcao.Text = "Para";
-            ProximaExecucao = DateTime.Now.AddSeconds(segundos);
-            ct.Start();
-
-            //Console.WriteLine(alvo.ToString());
-            //using (HttpResponseMessage response = client.GetAsync("todos/3").Wait())
-            //{
-            //    response.get
-            //}
+            conteudo = reader.ReadToEnd();
         }
+        var apiAgora = JsonSerializer.Deserialize<ApiTempo>(conteudo);
+        if (apiAgora == null)
+            return;
+
+        int difMinutos = 5 - (apiAgora.minute % 5);
+        if (difMinutos == 0)
+            difMinutos = 5;
+        var alvo = apiAgora.dateTime.AddMinutes(difMinutos);
+        var arredondado = new DateTime(alvo.Year, alvo.Month, alvo.Day, alvo.Hour, alvo.Minute, 0);
+        var segundos = (arredondado - apiAgora.dateTime).TotalSeconds;
+        btnAcao.Text = "Para";
+        ProximaExecucao = DateTime.Now.AddSeconds(segundos);
+        ct.Start();
         //var client = new HttpClient();
         //using HttpResponseMessage response = await httpClient.GetAsync("todos/3");
     }
 
+    //private void DetectaProxy()
+    //{
+    //    string conteudo = string.Empty;
+    //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo");
+    //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+    //    using (Stream stream = response.GetResponseStream())
+    //    using (StreamReader reader = new StreamReader(stream))
+    //    {
+    //        conteudo = reader.ReadToEnd();
+    //    }
 
+    //    Console.WriteLine(conteudo);
+    //}
 }
 
 file record ApiTempo

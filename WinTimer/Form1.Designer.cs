@@ -59,16 +59,17 @@
             // 
             this.lbFalta.AutoSize = true;
             this.lbFalta.Font = new System.Drawing.Font("Segoe UI", 35F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbFalta.Location = new System.Drawing.Point(238, 3);
+            this.lbFalta.Location = new System.Drawing.Point(256, 2);
             this.lbFalta.Name = "lbFalta";
-            this.lbFalta.Size = new System.Drawing.Size(151, 62);
+            this.lbFalta.Size = new System.Drawing.Size(84, 62);
             this.lbFalta.TabIndex = 3;
-            this.lbFalta.Text = "label1";
+            this.lbFalta.Text = "---";
+            this.lbFalta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // chMudo
             // 
             this.chMudo.AutoSize = true;
-            this.chMudo.Location = new System.Drawing.Point(128, 36);
+            this.chMudo.Location = new System.Drawing.Point(192, 9);
             this.chMudo.Name = "chMudo";
             this.chMudo.Size = new System.Drawing.Size(58, 19);
             this.chMudo.TabIndex = 4;
@@ -77,7 +78,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(192, 3);
+            this.button1.Location = new System.Drawing.Point(128, 34);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(58, 28);
             this.button1.TabIndex = 5;
@@ -89,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 73);
+            this.ClientSize = new System.Drawing.Size(346, 70);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.chMudo);
             this.Controls.Add(this.lbFalta);
