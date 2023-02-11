@@ -32,6 +32,7 @@
             this.btnAcao = new System.Windows.Forms.Button();
             this.lbFalta = new System.Windows.Forms.Label();
             this.chMudo = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtIntervalo
@@ -46,9 +47,9 @@
             // 
             // btnAcao
             // 
-            this.btnAcao.Location = new System.Drawing.Point(144, 3);
+            this.btnAcao.Location = new System.Drawing.Point(128, 3);
             this.btnAcao.Name = "btnAcao";
-            this.btnAcao.Size = new System.Drawing.Size(74, 28);
+            this.btnAcao.Size = new System.Drawing.Size(58, 28);
             this.btnAcao.TabIndex = 2;
             this.btnAcao.Text = "Inicia";
             this.btnAcao.UseVisualStyleBackColor = true;
@@ -67,18 +68,29 @@
             // chMudo
             // 
             this.chMudo.AutoSize = true;
-            this.chMudo.Location = new System.Drawing.Point(144, 36);
+            this.chMudo.Location = new System.Drawing.Point(128, 36);
             this.chMudo.Name = "chMudo";
             this.chMudo.Size = new System.Drawing.Size(58, 19);
             this.chMudo.TabIndex = 4;
             this.chMudo.Text = "Mudo";
             this.chMudo.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(192, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(58, 28);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Auto";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnAutomatico_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 73);
+            this.ClientSize = new System.Drawing.Size(394, 73);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.chMudo);
             this.Controls.Add(this.lbFalta);
             this.Controls.Add(this.btnAcao);
@@ -97,5 +109,6 @@
         private Button btnAcao;
         private Label lbFalta;
         private CheckBox chMudo;
+        private Button button1;
     }
 }
