@@ -94,7 +94,11 @@ public partial class Form1 : Form
     private void btnAutomatico_Click(object sender, EventArgs e)
     {
         string conteudo = string.Empty;
+        //var proxy = new WebProxy("http://srvhsm101.hsm.com.br", 3128);
+        //proxy.Credentials = new
+        //proxy.UseDefaultCredentials = true;
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo");
+        //request.Proxy = proxy;
         using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
         using (Stream stream = response.GetResponseStream())
         using (StreamReader reader = new StreamReader(stream))
