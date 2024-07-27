@@ -15,7 +15,10 @@ public partial class Form1 : Form
     DateTime ultimaExecucao = DateTime.Now;
 
 
-    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Alarme.wav");
+    System.Media.SoundPlayer player60 = new System.Media.SoundPlayer(@"Tick60.wav");
+    System.Media.SoundPlayer player300 = new System.Media.SoundPlayer(@"Tick300.wav");
+    
+
 
     delegate void SetTextCallback(string texto);
 
@@ -48,14 +51,14 @@ public partial class Form1 : Form
                     {
                         ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
                         if (!this.chMudo.Checked)
-                            player.Play();
+                            player300.Play();
                     }
                 }
                 else if (faltam % 60 == 0)
                 {
                     if (!this.chMudo.Checked)
                     {
-                        Console.Beep(3000, 300);
+                        player60.Play();
 
                     }
                 }
