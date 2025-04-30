@@ -1,5 +1,6 @@
 
 
+using GuerrillaNtp;
 using System.Net;
 using System.Net.Http;
 using System.Security.Policy;
@@ -94,29 +95,28 @@ public partial class Form1 : Form
 
     private void btnAutomatico_Click(object sender, EventArgs e)
     {
-        string conteudo = string.Empty;
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo");
-        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-        using (Stream stream = response.GetResponseStream())
-        using (StreamReader reader = new StreamReader(stream))
-        {
-            conteudo = reader.ReadToEnd();
-        }
-        var apiAgora = JsonSerializer.Deserialize<ApiTempo>(conteudo);
-        if (apiAgora == null)
-            return;
+        NtpClient client = new NtpClient("a.st1.ntp.br");
+        NtpClock clock = client.Query();
 
-        int difMinutos = 5 - (apiAgora.minute % 5);
+        //HttpClient client = new HttpClient();
+        //var request = client.GetAsync("http://worldtimeapi.org/api/timezone/Etc/UTC").Result;
+        //if (request.StatusCode != HttpStatusCode.OK)
+        //    return;
+
+        //var conteudo = request.Content.ReadAsStringAsync().Result;
+        //var apiAgora = JsonSerializer.Deserialize<ApiTempo>(conteudo);
+        //if (apiAgora == null)
+        //    return;
+
+        int difMinutos = 5 - (clock.Now.Minute % 5);
         if (difMinutos == 0)
             difMinutos = 5;
-        var alvo = apiAgora.dateTime.AddMinutes(difMinutos);
+        var alvo = clock.Now.AddMinutes(difMinutos);
         var arredondado = new DateTime(alvo.Year, alvo.Month, alvo.Day, alvo.Hour, alvo.Minute, 0);
-        var segundos = (arredondado - apiAgora.dateTime).TotalSeconds;
+        var segundos = (arredondado - clock.Now).TotalSeconds;
         btnAcao.Text = "Para";
         ProximaExecucao = DateTime.Now.AddSeconds(segundos);
         ct.Start();
-        //var client = new HttpClient();
-        //using HttpResponseMessage response = await httpClient.GetAsync("todos/3");
     }
 
     //private void DetectaProxy()
@@ -134,19 +134,24 @@ public partial class Form1 : Form
     //}
 }
 
-file record ApiTempo
+
+public class ApiTempo
 {
-    public int year { get; set; }
-    public int month { get; set; }
-    public int day { get; set; }
-    public int hour { get; set; }
-    public int minute { get; set; }
-    public int seconds { get; set; }
-    public int milliSeconds { get; set; }
-    public DateTime dateTime { get; set; }
-    public string? date { get; set; }
-    public string? time { get; set; }
-    public string? timeZone { get; set; }
-    public string? dayOfWeek { get; set; }
-    public bool dstActive { get; set; }
+    public string? utc_offset { get; set; }
+    public string? timezone { get; set; }
+    public int day_of_week { get; set; }
+    public int day_of_year { get; set; }
+    public DateTimeOffset datetime { get; set; }
+    public DateTimeOffset utc_datetime { get; set; }
+    public int unixtime { get; set; }
+    public int raw_offset { get; set; }
+    public int week_number { get; set; }
+    public bool dst { get; set; }
+    public string? abbreviation { get; set; }
+    public int dst_offset { get; set; }
+    public object? dst_from { get; set; }
+    public object? dst_until { get; set; }
+    public string? client_ip { get; set; }
 }
+
+
