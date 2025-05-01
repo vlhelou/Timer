@@ -30,8 +30,8 @@ public partial class Form1 : Form
     {
         ct.Enabled = true;
         ct.Start();
-        ct.Elapsed += MostraTempo;
-        btnAutomatico_Click(null, null);
+        ct.Elapsed += MostraTempo!;
+        btnAutomatico_Click(null!, null!);
 
     }
 
