@@ -1,10 +1,7 @@
 
 
-using GuerrillaNtp;
+using System.Net.Sockets;
 using System.Net;
-using System.Net.Http;
-using System.Security.Policy;
-using System.Text.Json;
 using System.Timers;
 
 namespace WinTimer;
@@ -18,7 +15,7 @@ public partial class Form1 : Form
 
     System.Media.SoundPlayer player60 = new System.Media.SoundPlayer(@"Tick60.wav");
     System.Media.SoundPlayer player300 = new System.Media.SoundPlayer(@"Tick300.wav");
-    
+
 
 
     delegate void SetTextCallback(string texto);
@@ -98,63 +95,63 @@ public partial class Form1 : Form
 
     private void btnAutomatico_Click(object sender, EventArgs e)
     {
-        NtpClient client = new NtpClient("a.st1.ntp.br");
-        NtpClock clock = client.Query();
+        
+        var clock = GetNetworkTime("pool.ntp.org");
 
-        //HttpClient client = new HttpClient();
-        //var request = client.GetAsync("http://worldtimeapi.org/api/timezone/Etc/UTC").Result;
-        //if (request.StatusCode != HttpStatusCode.OK)
-        //    return;
-
-        //var conteudo = request.Content.ReadAsStringAsync().Result;
-        //var apiAgora = JsonSerializer.Deserialize<ApiTempo>(conteudo);
-        //if (apiAgora == null)
-        //    return;
-
-        int difMinutos = 5 - (clock.Now.Minute % 5);
+        int difMinutos = 5 - (clock.Minute % 5);
         if (difMinutos == 0)
             difMinutos = 5;
-        var alvo = clock.Now.AddMinutes(difMinutos);
+        var alvo = clock.AddMinutes(difMinutos);
         var arredondado = new DateTime(alvo.Year, alvo.Month, alvo.Day, alvo.Hour, alvo.Minute, 0);
-        var segundos = (arredondado - clock.Now).TotalSeconds;
+        var segundos = (arredondado - clock).TotalSeconds;
         btnAcao.Text = "Para";
         ProximaExecucao = DateTime.Now.AddSeconds(segundos);
         ct.Start();
     }
 
-    //private void DetectaProxy()
-    //{
-    //    string conteudo = string.Empty;
-    //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.timeapi.io/api/Time/current/zone?timeZone=America/Sao_Paulo");
-    //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-    //    using (Stream stream = response.GetResponseStream())
-    //    using (StreamReader reader = new StreamReader(stream))
-    //    {
-    //        conteudo = reader.ReadToEnd();
-    //    }
+    private DateTime GetNetworkTime(string ntpServer)
+    {
+        const int NtpDataLength = 48;
+        byte[] ntpData = new byte[NtpDataLength];
 
-    //    Console.WriteLine(conteudo);
-    //}
+        // Setting the Leap Indicator, Version Number, and Mode fields
+        ntpData[0] = 0x1B;
+
+        // Connect to the NTP server
+        using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+        {
+            socket.Connect(new IPEndPoint(Dns.GetHostAddresses(ntpServer)[0], 123));
+            socket.Send(ntpData);
+            socket.Receive(ntpData);
+        }
+
+        // Extract the timestamp (starting at byte 40)
+        ulong intPart = BitConverter.ToUInt32(ntpData, 40);
+        ulong fracPart = BitConverter.ToUInt32(ntpData, 44);
+
+        // Convert to big-endian
+        intPart = SwapEndianness(intPart);
+        fracPart = SwapEndianness(fracPart);
+
+        // Calculate the time (NTP timestamp starts from 1900)
+        var milliseconds = (intPart * 1000) + ((fracPart * 1000) / 0x100000000L);
+        var networkDateTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
+
+        return networkDateTime.ToLocalTime();
+    }
+
+
+
+    private uint SwapEndianness(ulong x)
+    {
+        return (uint)(((x & 0x000000FF) << 24) +
+                      ((x & 0x0000FF00) << 8) +
+                      ((x & 0x00FF0000) >> 8) +
+                      ((x & 0xFF000000) >> 24));
+    }
+
 }
 
 
-public class ApiTempo
-{
-    public string? utc_offset { get; set; }
-    public string? timezone { get; set; }
-    public int day_of_week { get; set; }
-    public int day_of_year { get; set; }
-    public DateTimeOffset datetime { get; set; }
-    public DateTimeOffset utc_datetime { get; set; }
-    public int unixtime { get; set; }
-    public int raw_offset { get; set; }
-    public int week_number { get; set; }
-    public bool dst { get; set; }
-    public string? abbreviation { get; set; }
-    public int dst_offset { get; set; }
-    public object? dst_from { get; set; }
-    public object? dst_until { get; set; }
-    public string? client_ip { get; set; }
-}
 
 
