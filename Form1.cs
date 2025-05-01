@@ -9,8 +9,8 @@ namespace WinTimer;
 public partial class Form1 : Form
 {
     System.Timers.Timer ct = new() { Interval = 1000 };
-    DateTime ProximaExecucao = new DateTime();
-    DateTime ultimaExecucao = DateTime.Now;
+    int offset;
+    DateTimeOffset ProximaExecucao = new();
 
 
     System.Media.SoundPlayer player60 = new System.Media.SoundPlayer(@"Tick60.wav");
@@ -45,19 +45,14 @@ public partial class Form1 : Form
                 var faltam = (int)(ProximaExecucao - DateTime.Now).TotalSeconds;
                 if (faltam <= 0)
                 {
-                    if (int.TryParse(txtIntervalo.Text, out int intervalo))
-                    {
-                        ProximaExecucao = ProximaExecucao.AddSeconds(intervalo);
-                        if (!this.chMudo.Checked)
-                            player300.Play();
-                    }
-                }
-                else if (faltam % 60 == 0)
-                {
+                    var minutos = ProximaExecucao.Minute;
+                    ProximaExecucao = ProximaExecucao.AddSeconds(60);
                     if (!this.chMudo.Checked)
                     {
-                        player60.Play();
-
+                        if (ProximaExecucao.Minute % 5 == 0)
+                            player300.Play();
+                        else
+                            player60.Play();
                     }
                 }
                 SetTextCallback d = new SetTextCallback(DefinirTexto);
@@ -70,7 +65,7 @@ public partial class Form1 : Form
 
     private void DefinirTexto(string texto)
     {
-        this.lbFalta.Text = texto;
+        this.lbFalta.Text = texto.PadLeft(2,'0');
     }
 
     private void btnAcao_Click(object sender, EventArgs e)
@@ -78,11 +73,8 @@ public partial class Form1 : Form
         if (btnAcao.Text == "Inicia")
         {
             btnAcao.Text = "Para";
-            if (int.TryParse(txtIntervalo.Text, out int intervalo))
-            {
-                ProximaExecucao = DateTime.Now.AddSeconds(intervalo);
-                ct.Start();
-            }
+            ProximaExecucao = DateTime.Now.AddSeconds(60);
+            ct.Start();
 
         }
         else
@@ -95,17 +87,12 @@ public partial class Form1 : Form
 
     private void btnAutomatico_Click(object sender, EventArgs e)
     {
-        
-        var clock = GetNetworkTime("pool.ntp.org");
-
-        int difMinutos = 5 - (clock.Minute % 5);
-        if (difMinutos == 0)
-            difMinutos = 5;
-        var alvo = clock.AddMinutes(difMinutos);
-        var arredondado = new DateTime(alvo.Year, alvo.Month, alvo.Day, alvo.Hour, alvo.Minute, 0);
-        var segundos = (arredondado - clock).TotalSeconds;
+        var clock = new DateTimeOffset(GetNetworkTime("pool.ntp.org"));
+        offset = (int)(clock - DateTimeOffset.Now).TotalSeconds;
+        var agora = clock.ToUnixTimeSeconds();
+        var referencia = (agora - (agora % 60)) + 60;
         btnAcao.Text = "Para";
-        ProximaExecucao = DateTime.Now.AddSeconds(segundos);
+        ProximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia);
         ct.Start();
     }
 
@@ -139,8 +126,6 @@ public partial class Form1 : Form
 
         return networkDateTime.ToLocalTime();
     }
-
-
 
     private uint SwapEndianness(ulong x)
     {

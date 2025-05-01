@@ -28,26 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtIntervalo = new TextBox();
             btnAcao = new Button();
             lbFalta = new Label();
             chMudo = new CheckBox();
             button1 = new Button();
             SuspendLayout();
             // 
-            // txtIntervalo
-            // 
-            txtIntervalo.Font = new Font("Segoe UI", 30F);
-            txtIntervalo.Location = new Point(2, 3);
-            txtIntervalo.Name = "txtIntervalo";
-            txtIntervalo.Size = new Size(120, 61);
-            txtIntervalo.TabIndex = 1;
-            txtIntervalo.Text = "300";
-            txtIntervalo.TextAlign = HorizontalAlignment.Right;
-            // 
             // btnAcao
             // 
-            btnAcao.Location = new Point(128, 3);
+            btnAcao.Location = new Point(8, 3);
             btnAcao.Name = "btnAcao";
             btnAcao.Size = new Size(58, 28);
             btnAcao.TabIndex = 2;
@@ -59,7 +48,7 @@
             // 
             lbFalta.AutoSize = true;
             lbFalta.Font = new Font("Segoe UI", 35F);
-            lbFalta.Location = new Point(256, 2);
+            lbFalta.Location = new Point(136, 2);
             lbFalta.Name = "lbFalta";
             lbFalta.Size = new Size(84, 62);
             lbFalta.TabIndex = 3;
@@ -69,7 +58,7 @@
             // chMudo
             // 
             chMudo.AutoSize = true;
-            chMudo.Location = new Point(192, 9);
+            chMudo.Location = new Point(72, 9);
             chMudo.Name = "chMudo";
             chMudo.Size = new Size(58, 19);
             chMudo.TabIndex = 4;
@@ -78,7 +67,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(128, 34);
+            button1.Location = new Point(8, 34);
             button1.Name = "button1";
             button1.Size = new Size(58, 28);
             button1.TabIndex = 5;
@@ -90,12 +79,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(346, 70);
+            ClientSize = new Size(249, 69);
             Controls.Add(button1);
             Controls.Add(chMudo);
             Controls.Add(lbFalta);
             Controls.Add(btnAcao);
-            Controls.Add(txtIntervalo);
             Name = "Form1";
             Text = "Timer";
             Load += Form1_Load;
@@ -105,7 +93,6 @@
         }
 
         #endregion
-        private TextBox txtIntervalo;
         private Button btnAcao;
         private Label lbFalta;
         private CheckBox chMudo;
