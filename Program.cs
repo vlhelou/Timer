@@ -20,8 +20,9 @@ System.Media.SoundPlayer Vela15 = new System.Media.SoundPlayer(@"Vela15.wav");
 
 
 
-
-var clock = new DateTimeOffset(GetNetworkTime("pool.ntp.org"));
+//a.ntp.br
+//200.20.186.94
+var clock = new DateTimeOffset(GetNetworkTime("a.ntp.br"));
 int gFaltam = 0;
 //Console.WriteLine("\u259B");
 
@@ -45,21 +46,29 @@ ct.Elapsed += (s, e) =>
             int dezena = (faltamSegundos / 10) % 10;
             gFaltam = faltamSegundos;
 
+
+            if (faltamSegundos < 10)
+                Console.ForegroundColor = ConsoleColor.Red;
+            else
+                Console.ForegroundColor = ConsoleColor.White;
+
             for (int i = 0; i < dezena; i++)
                 Console.Write("\u25A5.");
 
-
-            Console.Write (  new string('.', unidade).PadRight(30));
+            Console.Write(new string('.', unidade).PadRight(30));
             
             Console.SetCursorPosition(0, 1);
-            for(int i=0;i<5-(minuto % 5);i++)
-                Console.Write("\u25A5.");
+            Console.ForegroundColor = ConsoleColor.Green;
+            for (int i=0;i<5-(minuto % 5);i++)
+                Console.Write($"{i} ");
+            //Console.Write("\u25A5.");
             Console.Write("                 ");
 
 
             Console.SetCursorPosition(0, 2);
+            Console.ForegroundColor = ConsoleColor.Blue;
             for (int i = 0; i < 15-(minuto % 15); i++)
-                Console.Write("\u25A5.");
+                Console.Write($"{i} ");
             Console.Write("                 ");
 
             Console.SetCursorPosition(0, 3);
