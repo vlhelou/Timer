@@ -2,7 +2,7 @@
   "profiles": {
     "Timer": {
       "commandName": "Project",
-      "commandLineArgs": "--ntp time.google.com"
+      "commandLineArgs": ""
     }
   }
 }
