@@ -13,7 +13,11 @@ System.Timers.Timer ct = new()
 Console.OutputEncoding = Encoding.UTF8;
 Console.CursorVisible = false;
 
-System.Media.SoundPlayer Vela1 = new System.Media.SoundPlayer(@"Vela1.wav");
+System.Media.SoundPlayer Minuto1 = new System.Media.SoundPlayer(@"Minuto1.wav");
+System.Media.SoundPlayer Minuto2 = new System.Media.SoundPlayer(@"Minuto2.wav");
+System.Media.SoundPlayer Minuto3 = new System.Media.SoundPlayer(@"Minuto3.wav");
+System.Media.SoundPlayer Minuto4 = new System.Media.SoundPlayer(@"Minuto4.wav");
+
 System.Media.SoundPlayer Vela5 = new System.Media.SoundPlayer(@"Vela5.wav");
 System.Media.SoundPlayer Vela15 = new System.Media.SoundPlayer(@"Vela15.wav");
 
@@ -85,7 +89,21 @@ ct.Elapsed += (s, e) =>
         }
         else if (ProximaExecucao.Minute % 1 == 0)
         {
-            Vela1.Play();
+            switch(ProximaExecucao.Minute % 5)
+            {
+                case 1:
+                    Minuto1.Play();
+                    break;
+                case 2:
+                    Minuto2.Play();
+                    break;
+                case 3:
+                    Minuto3.Play();
+                    break;
+                case 4:
+                    Minuto4.Play();
+                    break;
+            }
         }
         ProximaExecucao = ProximaExecucao.AddSeconds(60);
 
