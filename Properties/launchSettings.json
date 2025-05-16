@@ -2,7 +2,7 @@
   "profiles": {
     "Timer": {
       "commandName": "Project",
-      "commandLineArgs": ""
+      "commandLineArgs": "--offset -3"
     }
   }
 }
