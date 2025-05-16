@@ -3,6 +3,15 @@ using Timer;
 
 
 ArgsParse argumentos = new ArgsParse(args);
+int offset = 0;
+
+if (!string.IsNullOrEmpty(argumentos.Valor("offset")))
+{
+    if (int.TryParse(argumentos.Valor("offset"), out int opcao))
+    {
+        offset = opcao;
+    }
+}
 
 System.Timers.Timer ct = new()
 {
@@ -27,10 +36,9 @@ var clock = new DateTimeOffset(ntp.Agora());
 int gFaltam = 0;
 //Console.WriteLine("\u259B");
 
-int offset = (int)(clock - DateTimeOffset.Now).TotalSeconds;
 var agora = clock.ToUnixTimeSeconds();
 var referencia = (agora - (agora % 60)) + 60;
-DateTimeOffset ProximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia);
+DateTimeOffset ProximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia+offset);
 //Console.WriteLine($"Referência: {referencia}, offset: {offset}, próxima: {ProximaExecucao}");
 
 //ct.Start();
