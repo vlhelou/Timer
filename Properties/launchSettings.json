@@ -2,7 +2,7 @@
   "profiles": {
     "Timer": {
       "commandName": "Project",
-      "commandLineArgs": "agora"
+      "commandLineArgs": "offset -5"
     }
   }
 }

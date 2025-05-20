@@ -43,8 +43,9 @@ if (string.IsNullOrEmpty(argumentos.Valor("agora")))
     //Console.WriteLine("\u259B");
 
     var agora = clock.ToUnixTimeSeconds();
-    var referencia = (agora - (agora % 60)) + 60;
+    long referencia = (agora - (agora % 60)) + 60;
     proximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia + offset);
+    referencia = (agora - (agora % (60*15))) ;
     tempoReferencia = DateTimeOffset.FromUnixTimeSeconds(referencia + offset);
 
 }
