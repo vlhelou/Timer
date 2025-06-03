@@ -43,10 +43,23 @@ if (string.IsNullOrEmpty(argumentos.Valor("agora")))
     //Console.WriteLine("\u259B");
 
     var agora = clock.ToUnixTimeSeconds();
-    long referencia = (agora - (agora % 60)) + 60;
-    proximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia + offset);
-    referencia = (agora - (agora % (60*15))) ;
-    tempoReferencia = DateTimeOffset.FromUnixTimeSeconds(referencia + offset);
+    Console.WriteLine($"Agora: {agora}");
+    long referencia = (agora - (agora % 60)) + 60 ;
+
+    Console.WriteLine($"referencia: {referencia}");
+
+    if (offset != 0)
+    {
+        referencia += offset;
+        Console.WriteLine($"referencia com offset: {referencia}");
+    }
+
+    proximaExecucao = DateTimeOffset.FromUnixTimeSeconds(referencia);
+
+    Console.WriteLine($"Referência: {referencia}, offset: {offset}, proxima: {proximaExecucao}");
+    referencia = (agora - (agora % (60 * 15))) + offset;
+    tempoReferencia = DateTimeOffset.FromUnixTimeSeconds(referencia);
+    Console.WriteLine($"Tempo 15: {tempoReferencia}");
 
 }
 
@@ -55,10 +68,10 @@ if (string.IsNullOrEmpty(argumentos.Valor("agora")))
 //ct.Start();
 ct.Elapsed += (s, e) =>
 {
-    var segundos = (int)(proximaExecucao-DateTimeOffset.Now).TotalSeconds;
+    var segundos = (int)(proximaExecucao - DateTimeOffset.Now).TotalSeconds;
     int minutos = (int)Math.Floor((proximaExecucao - tempoReferencia).TotalMinutes);
 
-    if (segundos <=0 )
+    if (segundos <= 0)
     {
         if (minutos % 15 == 0)
         {
@@ -90,7 +103,7 @@ ct.Elapsed += (s, e) =>
     }
     else
     {
-        var restando =  segundos;
+        var restando = segundos;
         Console.Title = "Faltando: " + restando.ToString();
     }
 
